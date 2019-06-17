@@ -1,0 +1,22 @@
+{
+  "name": "chaoscat",
+  "version": "1.0.0",
+  "description": "Repo for chaos cat",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/micksmits/chaoscat.git"
+  },
+  "author": "Mick Smits",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/micksmits/chaoscat/issues"
+  },
+  "homepage": "https://github.com/micksmits/chaoscat#readme",
+  "dependencies": {
+    "discord.js": "^11.5.1"
+  }
+}
