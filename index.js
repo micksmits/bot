@@ -19,8 +19,12 @@ client.on('ready', () => {
 
 const hasPerm = (msg, perm) => {
     switch (perm) {
+        case 'dev':
+            return msg.member.roles.some(role => role.name === config.roleDev);
         case 'admin':
             return msg.member.roles.some(role => role.name === config.roleAdmin);
+        case 'member':
+            return msg.member.roles.some(role => role.name === config.roleMember);
     }
 }
 
