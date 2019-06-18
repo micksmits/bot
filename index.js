@@ -17,18 +17,30 @@ client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
 });
 
+const hasPerm = (msg, perm) => {
+    switch (perm) {
+        case 'admin':
+            return msg.member.roles.some(role => role.name === config.roleAdmin);
+    }
+}
+
 client.on('message', msg => {
-    if (!message.content.startsWith(config.prefix) || message.author.bot) return;
+    if (!msg.content.startsWith(config.prefix) || msg.author.bot) return;
 
-    const args = message.content.slice(config.prefix.length).split(/ +/);
-    const command = args.shift().toLowerCase();
+    const args = msg.content.slice(config.prefix.length).split(/ +/);
+    const command = client.commands.get(args.shift().toLowerCase());
 
-    if (!client.commands.has(command)) return;
+    if (!command) return;
+
+    if (!hasPerm(msg, command.perms)) return;
 
     try {
-		client.commands.get(command).execute(message, args);
+		command.execute(msg, args);
 	} catch (error) {
-		console.error(error);
+        console.error(command);
+        if (command.name === 'eval') {
+            message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(error)}\n\`\`\``);
+        }
 	}
 });
 
