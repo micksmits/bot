@@ -9,7 +9,7 @@ const clean = text => {
 }
 
 module.exports = {
-    perms: 'dev',
+    perms: ['dev'],
     name: 'eval',
     execute(msg, args) {
         try {

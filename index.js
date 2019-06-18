@@ -17,19 +17,18 @@ client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
 });
 
-const hasPerm = (msg, perm) => {
-    switch (perm) {
-        case 'dev':
-            return msg.member.roles.some(role => role.name === config.roleDev);
-        case 'admin':
-            return msg.member.roles.some(role => role.name === config.roleAdmin);
-        case 'member':
-            return msg.member.roles.some(role => role.name === config.roleMember);
-    }
+const hasPerm = (msg, perms, has = false) => {
+    perms.forEach(perm => {
+        if (msg.member.roles.find(role => role.name === perm)) {
+            has = true;
+        }
+    });
+
+    return has;
 }
 
 client.on('message', msg => {
-    if (!message.guild) return;
+    if (!msg.guild) return;
     if (!msg.content.startsWith(config.prefix) || msg.author.bot) return;
 
     const args = msg.content.slice(config.prefix.length).split(/ +/);
