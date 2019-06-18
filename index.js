@@ -29,6 +29,7 @@ const hasPerm = (msg, perm) => {
 }
 
 client.on('message', msg => {
+    if (!message.guild) return;
     if (!msg.content.startsWith(config.prefix) || msg.author.bot) return;
 
     const args = msg.content.slice(config.prefix.length).split(/ +/);
