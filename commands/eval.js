@@ -1,27 +1,37 @@
-const Discord = require('discord.js');
-const client = new Discord.Client();
+const Command = require("../bootstrap/base");
 
-const clean = text => {
+class Eval extends Command
+{
+    constructor (client) {
+        super(client, {
+          name: "eval",
+          description: "Evaluates arbitrary Javascript.",
+          category:"System",
+          usage: "eval <expression>",
+          permLevel: "developer"
+        });
+    }
+
+    clean (text)
+    {
     if (typeof(text) === "string")
-      return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
+        return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
     else
         return text;
-}
+    }
 
-module.exports = {
-    perms: ['dev'],
-    name: 'eval',
-    execute(msg, args) {
+    async run (msg, args)
+    {
         try {
             const code = args.join(" ");
             let evaled = eval(code);
+            const clean = await this.clean(evaled);
 
-            if (typeof evaled !== "string")
-                evaled = require("util").inspect(evaled);
-
-            msg.channel.send(clean(evaled), {code:"xl"});
+            msg.channel.send(clean, {code:"xl"});
         } catch (error) {
-            msg.channel.send(`\`ERROR\` \`\`\`xl\n${clean(error)}\n\`\`\``);
+            msg.channel.send(`\`ERROR\` \`\`\`xl\n${this.clean(error)}\n\`\`\``);
         }
     }
 }
+
+module.exports = Eval;

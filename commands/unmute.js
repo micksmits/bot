@@ -1,13 +1,13 @@
 const Command = require("../bootstrap/base");
 
-class Ban extends Command
+class Unmute extends Command
 {
     constructor (client) {
         super(client, {
-          name: "ban",
-          description: "Ban a member from the guild.",
+          name: "unmute",
+          description: "Unmute a member.",
           category:"Moderation",
-          usage: "ban <member> <reason>",
+          usage: "unmute <member>",
           permLevel: "admin"
         });
     }
@@ -23,11 +23,8 @@ class Ban extends Command
                 const member = msg.guild.member(user);
 
                 if (member) {
-                    member.ban({
-                        reason: reasonToBan,
-                    }).then(() => {
-                        msg.channel.send('member banned');
-                    });
+                    member.removeRole('587538757402755093');
+                    msg.channel.send('user unmuted');
                 }
             }
         } catch (error) {
@@ -36,4 +33,4 @@ class Ban extends Command
     }
 }
 
-module.exports = Ban;
+module.exports = Unmute;
