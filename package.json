@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/micksmits/chaoscat#readme",
   "dependencies": {
-    "discord.js": "^11.5.1"
+    "discord.js": "^11.5.1",
+    "klaw": "^2.1.1"
   }
 }

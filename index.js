@@ -1,55 +1,120 @@
-const Discord = require('discord.js');
-const fs = require('fs');
+const {Client, Collection} = require('discord.js');
+const {promisify} = require('util');
+const readdir = promisify(require('fs').readdir);
+const klaw = require("klaw");
+const path = require("path");
 
-const bla = require('./bootstrap/app');
+class Frog extends Client
+{
+    /**
+     * Create a new Frog instance.
+     * 
+     * @param {*} options
+     * @return void
+     */
+    constructor (options)
+    {
+        super(options);
 
-console.log(Object.keys(bla.blo));
+        this.config = require('./env');
 
-const client = new Discord.Client();
-client.commands = new Discord.Collection();
+        this.commands = new Collection();
 
-const config = require('./config.json');
+        this.wait = require('util').promisify(setTimeout);
+    }
 
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+    /**
+     * Get the message author's permission level.
+     * 
+     * @param {string} message
+     * @return number
+     */
+    permlevel (message)
+    {
+        let permlvl = 0;
 
-for (const file of commandFiles) {
-    const command = require(`./commands/${file}`);
-    client.commands.set(command.name, command);
+        const permOrder = this.config.permLevels.slice(0).sort((p, c) => p.level < c.level ? 1 : -1);
+
+        while (permOrder.length) {
+            const currentLevel = permOrder.shift();
+            if (currentLevel.check(message)) {
+                permlvl = currentLevel.level;
+                break;
+            }
+        }
+
+        return permlvl;
+    }
+
+    /**
+     * Load a command given the path and its name.
+     * 
+     * @param {string} commandPath
+     * @param {string} commandName
+     * @return bool
+     */
+    load (commandPath, commandName)
+    {
+        try {
+            const props = new (require(`${commandPath}${path.sep}${commandName}`))(this);
+            props.conf.location = commandPath;
+
+            if (props.init) {
+                props.init(this);
+            }
+
+            this.commands.set(props.help.name, props);
+            return false;
+        } catch (e) {
+            return `Unable to load command ${commandName}: ${e}`;
+        }
+    }
+
+    /**
+     * Unload a command given the path and its name.
+     * 
+     * @param {string} commandPath
+     * @param {string} commandName
+     * @return bool
+     */
+    async unload (commandPath, commandName) {
+        let command;
+        if (this.commands.has(commandName)) command = this.commands.get(commandName);
+
+        if (!command) return `${commandName} does not exist.`;
+
+        if (command.shutdown) await command.shutdown(this);
+
+        delete require.cache[require.resolve(`${commandPath}${path.sep}${commandName}.js`)];
+        return false;
+    }
 }
 
-client.on('ready', () => {
-    console.log(`Logged in as ${client.user.tag}!`);
-});
+const client = new Frog();
 
-const hasPerm = (msg, perms, has = false) => {
-    perms.forEach(perm => {
-        if (msg.member.roles.find(role => role.name === perm)) {
-            has = true;
-        }
+const init = async () => {
+    klaw('./commands').on('data', (item) => {
+        const cmdFile = path.parse(item.path);
+        if (!cmdFile.ext || cmdFile.ext !== '.js') return;
+        const response = client.load(cmdFile.dir, `${cmdFile.name}${cmdFile.ext}`);
     });
 
-    return has;
+    const evtFiles = await readdir("./events/");
+    evtFiles.forEach(file => {
+        const eventName = file.split(".")[0];
+        const event = new (require(`./events/${file}`))(client);
+
+        client.on(eventName, (...args) => event.run(...args));
+        delete require.cache[require.resolve(`./events/${file}`)];
+    });
+
+    client.levelCache = {};
+    for (let i = 0; i < client.config.permLevels.length; i++) {
+        const thisLevel = client.config.permLevels[i];
+        client.levelCache[thisLevel.name] = thisLevel.level;
+    }
+
+    client.login(client.config.token);
 }
 
-client.on('message', msg => {
-    if (!msg.guild) return;
-    if (!msg.content.startsWith(config.prefix) || msg.author.bot) return;
-
-    const args = msg.content.slice(config.prefix.length).split(/ +/);
-    const command = client.commands.get(args.shift().toLowerCase());
-
-    if (!command) return;
-
-    if (!hasPerm(msg, command.perms)) return;
-
-    try {
-		command.execute(msg, args);
-	} catch (error) {
-        console.error(command);
-        if (command.name === 'eval') {
-            message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(error)}\n\`\`\``);
-        }
-	}
-});
-
-client.login(config.token);
+init();
