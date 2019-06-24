@@ -8,7 +8,7 @@ class Unmute extends Command
           description: "Unmute a member.",
           category:"Moderation",
           usage: "unmute <member>",
-          permLevel: "admin"
+          permLevel: "mod"
         });
     }
 

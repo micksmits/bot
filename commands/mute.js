@@ -8,7 +8,7 @@ class Mute extends Command
           description: "Mute a member.",
           category:"Moderation",
           usage: "mute <member> <reason>",
-          permLevel: "admin"
+          permLevel: "mod"
         });
     }
 

@@ -8,7 +8,7 @@ class Ban extends Command
           description: "Ban a member from the guild.",
           category:"Moderation",
           usage: "ban <member> <reason>",
-          permLevel: "admin"
+          permLevel: "mod"
         });
     }
 
