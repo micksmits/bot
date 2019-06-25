@@ -23,8 +23,11 @@ class Unmute extends Command
                 const member = msg.guild.member(user);
 
                 if (member) {
+                    if (!member.roles.find('id', '587538757402755093')) return msg.channel.send('user is not muted');
+
                     member.removeRole('587538757402755093');
                     msg.channel.send('user unmuted');
+                    msg.channel.guild.channels.find('name', 'logs').send(`${member.user.tag} has been unmuted by ${msg.author.tag}`, {code:""});
                 }
             }
         } catch (error) {
