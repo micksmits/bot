@@ -9,6 +9,6 @@ module.exports = class
     async run (message) {
         if (message.channel.name === 'selfies' && message.attachments.size < 1) message.delete();
 
-        if (message.content.toLowerCase().includes('bepis') && message.channel.name !== 'logs') message.delete();
+        if (message.content.toLowerCase().replace(/\s/g, '').includes('bepis') && message.channel.name !== 'logs') message.delete();
     }
 }

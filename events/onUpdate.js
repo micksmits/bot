@@ -7,6 +7,6 @@ module.exports = class
     }
 
     async run (oldMessage, newMessage) {
-        if (newMessage.content.toLowerCase().includes('bepis') && newMessage.channel.name !== 'logs') newMessage.delete();
+        if (newMessage.content.toLowerCase().replace(/\s/g, '').includes('bepis') && newMessage.channel.name !== 'logs') newMessage.delete();
     }
 }
