@@ -8,5 +8,8 @@ module.exports = class
 
     async run (message) {
         if (message.channel.name === 'selfies' && message.attachments.size < 1) message.delete();
+
+        message = message.toLowerCase();
+        if (message.includes('bepis')) message.delete();
     }
 }
