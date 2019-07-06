@@ -16,7 +16,7 @@ class Frog extends Client
     {
         super(options);
 
-        this.config = require('./env');
+        this.config = require('../config/env');
 
         this.commands = new Collection();
 
@@ -93,18 +93,18 @@ class Frog extends Client
 const client = new Frog();
 
 const init = async () => {
-    klaw('./commands').on('data', (item) => {
+    klaw('./src/commands').on('data', (item) => {
         const cmdFile = path.parse(item.path);
         if (!cmdFile.ext || cmdFile.ext !== '.js') return;
         const response = client.load(cmdFile.dir, `${cmdFile.name}${cmdFile.ext}`);
     });
 
-    const evtFiles = await readdir("./events/");
+    const evtFiles = await readdir("./src/events/");
     evtFiles.forEach(file => {
-        const event = new (require(`./events/${file}`))(client);
+        const event = new (require(`../events/${file}`))(client);
         const eventName = event.name;
         client.on(eventName, (...args) => event.run(...args));
-        delete require.cache[require.resolve(`./events/${file}`)];
+        delete require.cache[require.resolve(`../events/${file}`)];
     });
 
     client.levelCache = {};
