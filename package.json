@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "description": "Repo for chaos cat",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/micksmits/chaoscat.git"
@@ -18,6 +16,9 @@
   "homepage": "https://github.com/micksmits/chaoscat#readme",
   "dependencies": {
     "discord.js": "^11.5.1",
-    "klaw": "^2.1.1"
+    "mysql2": "^2.1.0",
+    "sails-mysql": "^1.0.1",
+    "sequelize": "^5.21.3",
+    "waterline": "^0.13.6"
   }
 }
