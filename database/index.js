@@ -8,17 +8,19 @@ const sequelize = new Sequelize(
   {
     host: 'localhost',
     dialect: 'mysql',
-    timestamps: false
+    timestamps: false,
+    logging: false,
   }
 )
 
 const models = [
 'user',
-'server'
+'server',
+'channel'
 ]
 
 models.forEach (function (model) {
-  module.exports[model] = sequelize.import('../app/models/' + model)
+  module.exports[model] = sequelize.import('./models/' + model)
 })
 
 module.exports.sequelize = sequelize

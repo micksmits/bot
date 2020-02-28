@@ -7,6 +7,9 @@ module.exports = class
   }
 
   async run (message) {
-    message.guild.channels.find('name', 'logs').send(`a message by ${message.author.tag} has been deleted\n"${message}"`, {code:""})
+    const channel = await this.client.db.channel.findOne({ where: {server_id: message.guild.id, type: 'logs'}})
+    if (channel) {
+      message.guild.channels.get(channel.id).send(`a message by ${message.author.tag} has been deleted\n"${message}"`, {code:""})
+    }
   }
 }

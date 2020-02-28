@@ -31,7 +31,7 @@ class Command
 
   isBotOwner(author)
   {
-    return author != this.client.owner
+    return author == this.client.config.owner
   }
 }
 

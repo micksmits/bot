@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "description": "Repo for chaos cat",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "db:head": "cd database && alembic upgrade head",
+    "db:down": "cd database && alembic downgrade -1",
+    "db:base": "cd database && alembic downgrade base"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/micksmits/chaoscat.git"
@@ -15,6 +19,7 @@
   },
   "homepage": "https://github.com/micksmits/chaoscat#readme",
   "dependencies": {
+    "canvas": "^2.6.1",
     "discord.js": "^11.5.1",
     "mysql2": "^2.1.0",
     "sails-mysql": "^1.0.1",

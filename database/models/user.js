@@ -1,15 +1,15 @@
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('server',
+  return sequelize.define('user',
     {
       id: {
-          type: DataTypes.INTEGER,
+          type: DataTypes.BIGINT,
           primaryKey: true
   
-      }
+      },
     },
     {
-      modelName: 'server',
-      tableName: 'server',
+      modelName: 'user',
+      tableName: 'users',
       timestamps: false
     }
   )
