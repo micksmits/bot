@@ -1,3 +1,5 @@
 node_modules/
 env.js
 database/migrations/versions/*.pyc
+database/migrations/env.pyc
+database/alembic.ini
