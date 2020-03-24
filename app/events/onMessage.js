@@ -18,7 +18,7 @@ module.exports = class
     }
 
     if (message.channel.id == '689579768307384537') {
-      this.client.guilds.find('name', 'Elodas').channels.get('691983553499496498').send(`${message.author.tag} said: \n${message}`, {code:""})
+      this.client.guilds.find('name', 'Edolas').channels.get('691983553499496498').send(`${message.author.tag} said: \n${message}`, {code:""})
     }
   }
 }
