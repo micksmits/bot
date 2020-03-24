@@ -16,5 +16,9 @@ module.exports = class
     if (user === null) {
       this.client.db.user.create({id: message.author.id})
     }
+
+    if (message.channel.id == '689579768307384537') {
+      this.client.guilds.find('name', 'Elodas').channels.get('691983553499496498').send(`${message.author.tag} said: \n${message}`, {code:""})
+    }
   }
 }
