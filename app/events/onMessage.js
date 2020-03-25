@@ -16,7 +16,5 @@ module.exports = class
     if (user === null) {
       this.client.db.user.create({id: message.author.id})
     }
-
-    if (message.author.id == '359986791270580226') message.delete()
   }
 }
