@@ -20,10 +20,10 @@
   "homepage": "https://github.com/micksmits/chaoscat#readme",
   "dependencies": {
     "canvas": "^2.6.1",
-    "discord.js": "^11.5.1",
+    "discord.js": "^12.0.2",
     "mysql2": "^2.1.0",
     "sails-mysql": "^1.0.1",
-    "sequelize": "^5.21.3",
+    "sequelize": "^5.21.5",
     "waterline": "^0.13.6"
   }
 }
