@@ -16,13 +16,5 @@ module.exports = class
     if (user === null) {
       this.client.db.user.create({id: message.author.id})
     }
-
-    if (message.author.id == '241569249515143169') {
-      message.member.setNickname(message.content.substring(0,32))
-    }
-
-    if (message.author.id == '666683273711321088') {
-      message.member.setNickname(message.content.substring(0,32))
-    }
   }
 }
