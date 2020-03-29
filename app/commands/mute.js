@@ -26,7 +26,9 @@ class Mute extends Command
       if (member.roles.find('id', '670994176913178665')) return msg.channel.send('user is already muted')
 
       member.addRole('670994176913178665')
-      msg.channel.send('user muted')
+
+      msg.channel.send('User muted.')
+
       msg.channel.guild.channels.find('name', 'logs').send(
         `${member.user.tag} has been muted by ${msg.author.tag} because: ${reason}`,
         {code:""}

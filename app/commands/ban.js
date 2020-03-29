@@ -26,7 +26,7 @@ class Ban extends Command
       member.ban({
         reason: reason
       }).then(() => {
-        msg.channel.send('member banned')
+        msg.channel.send('User banned.')
       })
     }
   }
