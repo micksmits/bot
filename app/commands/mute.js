@@ -5,9 +5,7 @@ class Mute extends Command
   constructor (client) {
     super(client, {
       name: "mute",
-      description: "Mute a member.",
-      category:"Moderation",
-      usage: "mute <member> <reason>"
+      category: 1
     })
   }
 
@@ -16,23 +14,17 @@ class Mute extends Command
     if (!this.hasPermBot(msg, 'MANAGE_ROLES')) return
     if (!this.hasPermUser(msg, 'MANAGE_ROLES')) return
 
+    let role = await this.client.db.role.findOne({where: {server_id: msg.guild.id, type: 'mute'}})
+    if (!role) return
+
     const user = msg.mentions.users.first();
     const member = msg.guild.member(user)
 
-    args.shift()
-    const reason = args.join(' ')
+    if (member) {
+      if (member.roles.get(role.id)) return msg.channel.send('User is already muted.')
 
-    if (member && member != msg.guild.me) {
-      if (member.roles.find('id', '670994176913178665')) return msg.channel.send('user is already muted')
-
-      member.addRole('670994176913178665')
-
+      member.addRole(role.id)
       msg.channel.send('User muted.')
-
-      msg.channel.guild.channels.find('name', 'logs').send(
-        `${member.user.tag} has been muted by ${msg.author.tag} because: ${reason}`,
-        {code:""}
-      )
     }
   }
 }

@@ -16,7 +16,8 @@ const sequelize = new Sequelize(
 const models = [
 'user',
 'server',
-'channel'
+'channel',
+'role'
 ]
 
 models.forEach (function (model) {

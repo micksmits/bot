@@ -17,6 +17,10 @@ module.exports = class
     const cmd = this.client.commands.get(command)
     if (!cmd) return
 
+    const user = message.mentions.users.first();
+    const member = message.guild.member(user)
+    if (member == message.guild.me) return
+
     cmd.run(message, args)
   }
 }

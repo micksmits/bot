@@ -5,31 +5,26 @@ class Unmute extends Command
   constructor (client) {
     super(client, {
       name: "unmute",
-      description: "Unmute a member.",
-      category:"Moderation",
-      usage: "unmute <member>"
+      category: 1
     })
   }
 
-  async run (msg)
+  async run (msg, args)
   {
     if (!this.hasPermBot(msg, 'MANAGE_ROLES')) return
     if (!this.hasPermUser(msg, 'MANAGE_ROLES')) return
 
+    let role = await this.client.db.role.findOne({where: {server_id: msg.guild.id, type: 'mute'}})
+    if (!role) return
+
     const user = msg.mentions.users.first();
     const member = msg.guild.member(user)
 
-    if (member && member != msg.guild.me) {
-      if (!member.roles.find('id', '670994176913178665')) return msg.channel.send('user is not muted')
+    if (member) {
+      if (!member.roles.get(role.id)) return msg.channel.send('User isn\'t muted.')
 
-      member.removeRole('670994176913178665')
-
+      member.removeRole(role.id)
       msg.channel.send('User unmuted.')
-
-      msg.channel.guild.channels.find('name', 'logs').send(
-        `${member.user.tag} has been unmuted by ${msg.author.tag}`,
-        {code:""}
-      )
     }
   }
 }
