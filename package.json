@@ -1,7 +1,4 @@
 {
-  "name": "chaoscat",
-  "version": "1.0.0",
-  "description": "Repo for chaos cat",
   "main": "index.js",
   "scripts": {
     "db:head": "cd database && alembic upgrade head",

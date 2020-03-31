@@ -4,10 +4,10 @@ const readdir = promisify(require('fs').readdir)
 const klaw = require('klaw')
 const path = require('path')
 
-class Frog extends Client
+class Bot extends Client
 {
   /**
-   * Create a new Frog instance.
+   * Create a new Bot instance.
    * 
    * @param {*} options
    * @return void
@@ -92,7 +92,7 @@ class Frog extends Client
   }
 }
 
-const client = new Frog()
+const client = new Bot()
 
 const init = async () => {
   klaw('./app/commands').on('data', (item) => {
