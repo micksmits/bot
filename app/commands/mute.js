@@ -14,7 +14,7 @@ class Mute extends Command
     if (!this.hasPermBot(msg, 'MANAGE_ROLES')) return
     if (!this.hasPermUser(msg, 'MANAGE_ROLES')) return
 
-    let role = await this.client.db.role.findOne({where: {server_id: msg.guild.id, type: 'mute'}})
+    let role = await this.client.db.role.findOne({where: {guild_id: msg.guild.id, type: 'mute'}})
     if (!role) return
 
     const user = msg.mentions.users.first();

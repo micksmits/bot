@@ -16,19 +16,18 @@ depends_on = None
 
 class Type(enum.Enum):
     welcome = 'welcome'
+    assign = 'assign'
     mute = 'mute'
 
 def upgrade():
     op.create_table(
         'roles',
         sa.Column('id', sa.BigInteger, primary_key=True),
-        sa.Column('server_id', sa.BigInteger),
+        sa.Column('guild_id', sa.BigInteger),
         sa.Column('type', sa.Enum(Type)),
     )
 
-    op.create_foreign_key(
-        'fk_servers_roles', 'roles', 'servers', ['server_id'], ['id']
-    )
+    op.create_foreign_key('fk_guilds_roles', 'roles', 'guilds', ['guild_id'], ['id'], ondelete="CASCADE")
 
 def downgrade():
     op.drop_table('roles')

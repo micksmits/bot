@@ -7,7 +7,7 @@ module.exports = class
   }
 
   async run (message) {
-    const channel = await this.client.db.channel.findOne({ where: {id: message.channel.id, server_id: message.guild.id, type: 'media'}})
+    const channel = await this.client.db.channel.findOne({ where: {id: message.channel.id, guild_id: message.guild.id, type: 'media'}})
     if (channel && message.attachments.size < 1) {
       message.delete()
     }

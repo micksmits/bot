@@ -1,11 +1,11 @@
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('channel',
+  const channel = sequelize.define('channel',
     {
       id: {
           type: DataTypes.BIGINT,
           primaryKey: true
       },
-      server_id: {
+      guild_id: {
         type: DataTypes.BIGINT,
         references: {
           model: 'servers',
@@ -24,4 +24,14 @@ module.exports = function(sequelize, DataTypes) {
       timestamps: false
     }
   )
+
+  channel.associate = function (models) {
+    channel.belongsTo(models.guild, {
+      as: 'guild',
+      foreignKey: 'guild_id',
+      onDelete: 'CASCADE'
+    })
+  }
+
+  return channel
 }

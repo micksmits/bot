@@ -1,11 +1,11 @@
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('role',
+  const role = sequelize.define('role',
     {
       id: {
           type: DataTypes.BIGINT,
           primaryKey: true
       },
-      server_id: {
+      guild_id: {
         type: DataTypes.BIGINT,
         references: {
           model: 'servers',
@@ -14,7 +14,11 @@ module.exports = function(sequelize, DataTypes) {
       },
       type: {
         type: DataTypes.ENUM({
-          values: ['welcome']
+          values: [
+            'welcome',
+            'assign',
+            'mute'
+          ]
         })
       }
     },
@@ -24,4 +28,14 @@ module.exports = function(sequelize, DataTypes) {
       timestamps: false
     }
   )
+
+  role.associate = function (models) {
+    role.hasMany(models.reaction, {
+      foreignKey: 'message_id',
+      onDelete: 'CASCADE',
+      hooks: true
+    })
+  }
+
+  return role
 }

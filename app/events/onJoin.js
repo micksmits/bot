@@ -10,12 +10,12 @@ module.exports = class
   }
 
   async run (member) {
-    let channel = await this.client.db.channel.findOne({where: {server_id: member.guild.id, type: 'logs'}})
+    let channel = await this.client.db.channel.findOne({where: {guild_id: member.guild.id, type: 'logs'}})
     if (channel) {
       member.guild.channels.get(channel.id).send(`${member.user.tag} has joined the server`, {code:""})
     }
 
-    let role = await this.client.db.role.findOne({where: {server_id: member.guild.id, type: 'welcome'}})
+    let role = await this.client.db.role.findOne({where: {guild_id: member.guild.id, type: 'welcome'}})
     if (role) {
       member.addRole(role.id)
     }

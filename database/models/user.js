@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('user',
+  const user = sequelize.define('user',
     {
       id: {
           type: DataTypes.BIGINT,
@@ -13,4 +13,6 @@ module.exports = function(sequelize, DataTypes) {
       timestamps: false
     }
   )
+
+  return user
 }

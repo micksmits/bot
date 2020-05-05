@@ -15,9 +15,9 @@ depends_on = None
 
 def upgrade():
     op.create_table(
-        'servers',
+        'guilds',
         sa.Column('id', sa.BigInteger, primary_key=True),
     )
 
 def downgrade():
-    op.drop_table('servers')
+    op.drop_table('guilds')

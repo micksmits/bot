@@ -1,5 +1,7 @@
 const Sequelize = require('sequelize')
 const config = require('../env.js')
+const path = require('path')
+const fs = require('fs')
 
 const sequelize = new Sequelize(
   config.dbname,
@@ -13,15 +15,22 @@ const sequelize = new Sequelize(
   }
 )
 
-const models = [
-'user',
-'server',
-'channel',
-'role'
-]
+let db = {}
 
-models.forEach (function (model) {
-  module.exports[model] = sequelize.import('./models/' + model)
+fs
+  .readdirSync(__dirname+'/models/')
+  .forEach(function (file) {
+    const model = sequelize.import(path.join(__dirname+'/models/', file))
+    db[model.name] = model
+  })
+
+Object.keys(db).forEach(function (modelName) {
+  if ('associate' in db[modelName]) {
+    db[modelName].associate(db)
+  }
 })
 
-module.exports.sequelize = sequelize
+db.sequelize = sequelize
+db.Sequelize = Sequelize
+db.sequelize.sync()
+module.exports = db

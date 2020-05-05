@@ -22,13 +22,11 @@ def upgrade():
     op.create_table(
         'channels',
         sa.Column('id', sa.BigInteger, primary_key=True),
-        sa.Column('server_id', sa.BigInteger),
+        sa.Column('guild_id', sa.BigInteger),
         sa.Column('type', sa.Enum(Type)),
     )
 
-    op.create_foreign_key(
-        'fk_servers_channels', 'channels', 'servers', ['server_id'], ['id']
-    )
+    op.create_foreign_key('fk_guilds_channels', 'channels', 'guilds', ['guild_id'], ['id'], ondelete="CASCADE")
 
 def downgrade():
     op.drop_table('channels')
