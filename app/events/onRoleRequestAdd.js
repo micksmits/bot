@@ -11,14 +11,16 @@ module.exports = class
     const rolemessage = await this.client.db.message.findByPk(message.id)
     if (rolemessage) {
       const reactions = await rolemessage.getReactions()
+      let role
 
       reactions.forEach(async reactionRecord => {
         if (reaction.emoji.id == reactionRecord.id) {
           message.guild.member(user).addRole(reactionRecord.role_id)
-        } else {
-          await reaction.remove(user)
+          role = true
         }
       })
+
+      if (!role) await reaction.remove(user)
     }
   }
 }
