@@ -4,7 +4,14 @@ module.exports = function(sequelize, DataTypes) {
       id: {
           type: DataTypes.BIGINT,
           primaryKey: true
-      }
+      },
+      guild_id: {
+        type: DataTypes.BIGINT,
+        references: {
+          model: 'guilds',
+          key: 'id'
+        }
+      },
     },
     {
       modelName: 'message',
@@ -19,9 +26,7 @@ module.exports = function(sequelize, DataTypes) {
       onDelete: 'CASCADE',
       hooks: true
     })
-  }
 
-  message.associate = function (models) {
     message.belongsTo(models.guild, {
       as: 'guild',
       foreignKey: 'guild_id',

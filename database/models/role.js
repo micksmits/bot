@@ -8,7 +8,7 @@ module.exports = function(sequelize, DataTypes) {
       guild_id: {
         type: DataTypes.BIGINT,
         references: {
-          model: 'servers',
+          model: 'guilds',
           key: 'id'
         }
       },
@@ -31,9 +31,15 @@ module.exports = function(sequelize, DataTypes) {
 
   role.associate = function (models) {
     role.hasMany(models.reaction, {
-      foreignKey: 'message_id',
+      foreignKey: 'role_id',
       onDelete: 'CASCADE',
       hooks: true
+    })
+
+    role.belongsTo(models.guild, {
+      as: 'guild',
+      foreignKey: 'guild_id',
+      onDelete: 'CASCADE'
     })
   }
 

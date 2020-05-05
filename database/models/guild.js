@@ -19,10 +19,14 @@ module.exports = function(sequelize, DataTypes) {
       onDelete: 'CASCADE',
       hooks: true
     })
-  }
 
-  guild.associate = function (models) {
     guild.hasMany(models.message, {
+      foreignKey: 'guild_id',
+      onDelete: 'CASCADE',
+      hooks: true
+    })
+
+    guild.hasMany(models.role, {
       foreignKey: 'guild_id',
       onDelete: 'CASCADE',
       hooks: true

@@ -8,7 +8,7 @@ module.exports = function(sequelize, DataTypes) {
       guild_id: {
         type: DataTypes.BIGINT,
         references: {
-          model: 'servers',
+          model: 'guilds',
           key: 'id'
         }
       },

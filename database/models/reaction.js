@@ -8,7 +8,7 @@ module.exports = function(sequelize, DataTypes) {
       message_id: {
         type: DataTypes.BIGINT,
         references: {
-          model: 'message',
+          model: 'messages',
           key: 'id'
         }
       },
@@ -30,11 +30,10 @@ module.exports = function(sequelize, DataTypes) {
   reaction.associate = function (models) {
     reaction.belongsTo(models.message, {
       as: 'message',
-      foreignKey: 'message_id'
+      foreignKey: 'message_id',
+      onDelete: 'CASCADE'
     })
-  }
 
-  reaction.associate = function (models) {
     reaction.belongsTo(models.role, {
       as: 'role',
       foreignKey: 'role_id',
