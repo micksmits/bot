@@ -24,7 +24,7 @@ module.exports = class
       }
 
       if (packet.t === 'MESSAGE_REACTION_REMOVE') {
-        this.client.emit('messageReactionRemove', reaction, this.client.users.get(packet.d.user_id))
+        this.client.emit('messageReactionRemove', (reaction ? reaction : emoji), this.client.users.get(packet.d.user_id))
       }
     })
   }
