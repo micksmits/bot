@@ -17,7 +17,7 @@
   "homepage": "https://github.com/micksmits/chaoscat#readme",
   "dependencies": {
     "canvas": "^2.6.1",
-    "discord.js": "^11.6.3",
+    "discord.js": "^12.0.0",
     "klaw": "^3.0.0",
     "mysql2": "^2.1.0",
     "sequelize": "^5.21.5"
