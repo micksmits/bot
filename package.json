@@ -1,25 +1,27 @@
 {
-  "main": "index.js",
+  "main": "src/main.ts",
   "scripts": {
-    "db:head": "cd database && alembic upgrade head",
-    "db:down": "cd database && alembic downgrade -1",
-    "db:base": "cd database && alembic downgrade base"
+    "watch": "ts-node-dev --respawn -- src/main.ts"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/micksmits/chaoscat.git"
+    "url": "git+https://github.com/micksmits/discord-bot"
   },
   "author": "Mick Smits",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/micksmits/chaoscat/issues"
-  },
-  "homepage": "https://github.com/micksmits/chaoscat#readme",
   "dependencies": {
-    "canvas": "^2.6.1",
-    "discord.js": "^12.0.0",
-    "klaw": "^3.0.0",
-    "mysql2": "^2.1.0",
-    "sequelize": "^5.21.5"
+    "discord.js": "^13.8.1"
+  },
+  "devDependencies": {
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^4.7.4",
+    "dotenv": "^16.0.1",
+    "eslint": "^8.19.0",
+    "@typescript-eslint/eslint-plugin": "^5.30.5",
+    "@typescript-eslint/parser": "^5.30.5",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.2.4",
+    "eslint-plugin-promise": "^6.0.0"
   }
 }
