@@ -1,4 +1,5 @@
 import { Client, GatewayIntentBits, REST, Routes } from 'discord.js';
+import 'dotenv/config';
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 const commands = [
@@ -7,8 +8,8 @@ const commands = [
     description: 'Replies with Pong!',
   },
 ];
-const TOKEN = 'MTE1ODQ4MzA5OTQ1MDA4MTMyMQ.Gk-VUp.DsRDAvhYco0n-uxqkFSKnJl5ajQuHqtlFthDL0';
-const CLIENT_ID = '1158483099450081321';
+const TOKEN = process.env.DISCORD_TOKEN!;
+const CLIENT_ID = process.env.DISCORD_CLIENT_ID!;
 
 async function registerCommands(rest: REST) {
   try {
