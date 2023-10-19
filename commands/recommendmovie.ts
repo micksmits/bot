@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from "discord.js";
+import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import axios from 'axios';
 
 export default {
@@ -21,9 +21,23 @@ export default {
     });
 
     const chosenMovie = result.data.results[0];
+    const movieEmbed = new EmbedBuilder()
+      .setColor('#000000')
+      .setTitle(chosenMovie.original_title)
+      .setDescription(chosenMovie.overview)
+      .setImage(`https://image.tmdb.org/t/p/w600_and_h900_bestv2/${chosenMovie.poster_path}`)
+      .addFields(
+        { name: 'Rating', value: Math.round(chosenMovie.vote_average).toString()},
+        { name: 'Language', value: chosenMovie.original_language.toUpperCase()},
+        { name: 'Release Date', value: chosenMovie.release_date}
+      )
 
     console.log(chosenMovie);
 
-    await interaction.reply(`I found: ${chosenMovie.original_title} - ${chosenMovie.overview}`);
+    await interaction.reply({ embeds: [movieEmbed] });
   },
 }
+
+
+
+
