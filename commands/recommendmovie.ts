@@ -1,4 +1,5 @@
 import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
+import categories from '../utils/categories.json';
 import axios from 'axios';
 
 export default {
@@ -10,7 +11,7 @@ export default {
         .setDescription('Query the movie you\'d like to see')
         .setRequired(true)),
   async execute(interaction: any) {
-
+  console.log(categories)
     const query = interaction.options.getString('query');
 
     const result = await axios.get('https://api.themoviedb.org/3/search/movie', {
