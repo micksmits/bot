@@ -10,6 +10,7 @@ export default {
       option.setName('query')
         .setDescription('Query the movie you\'d like to see')
         .setRequired(true)),
+        .addChoices()
   async execute(interaction: any) {
   console.log(categories)
     const query = interaction.options.getString('query');
