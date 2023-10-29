@@ -7,36 +7,47 @@ export default {
     .setName('recommendmovie')
     .setDescription('Recommend a movie based on a given category')
     .addStringOption(option =>
-      option.setName('query')
-        .setDescription('Query the movie you\'d like to see')
-        .setRequired(true)),
-        .addChoices()
+      option.setName('category')
+        .setDescription('Choose the category of the movies you would like to see')
+        .setRequired(true)
+        .addChoices(
+          ...categories
+        )),
   async execute(interaction: any) {
-  console.log(categories)
-    const query = interaction.options.getString('query');
-
-    const result = await axios.get('https://api.themoviedb.org/3/search/movie', {
+    const category = interaction.options.getString('category');
+    
+    const result = await axios.get('https://api.themoviedb.org/3/discover/movie', {
       params: {
         api_key: process.env.TMDB_TOKEN,
-        query,
+        include_adult: false,
+        include_video: false,
+        language: "en-US",
+        page: 1,
+        sort_by: "popularity.desc",
+        with_genres: category
+
       }
     });
 
-    const chosenMovie = result.data.results[0];
-    const movieEmbed = new EmbedBuilder()
-      .setColor('#000000')
-      .setTitle(chosenMovie.original_title)
-      .setDescription(chosenMovie.overview)
-      .setImage(`https://image.tmdb.org/t/p/w600_and_h900_bestv2/${chosenMovie.poster_path}`)
-      .addFields(
-        { name: 'Rating', value: Math.round(chosenMovie.vote_average).toString()},
-        { name: 'Language', value: chosenMovie.original_language.toUpperCase()},
-        { name: 'Release Date', value: chosenMovie.release_date}
-      )
+    let movies: any[] = [];
 
-    console.log(chosenMovie);
+    for (let i=0; i < 10; i++) {
+      const movie = result.data.results[i];
+      const embed = new EmbedBuilder()
+        .setColor('#000000')
+        .setTitle(movie.original_title)
+        .setDescription(movie.overview)
+        .setImage(`https://image.tmdb.org/t/p/w600_and_h900_bestv2/${movie.poster_path}`)
+        .addFields(
+           { name: 'Rating', value: Math.round(movie.vote_average).toString()},
+           { name: 'Language', value: movie.original_language.toUpperCase()},
+           { name: 'Release Date', value: movie.release_date}
+          )
 
-    await interaction.reply({ embeds: [movieEmbed] });
+      movies.push(embed);
+    }
+
+    await interaction.reply({ embeds: movies });
   },
 }
 
