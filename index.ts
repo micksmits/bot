@@ -1,9 +1,9 @@
-import { Client, Collection, GatewayIntentBits, REST, Routes } from 'discord.js';
+import { Client, Collection, GatewayIntentBits, REST, Routes, EmbedBuilder, TextChannel } from 'discord.js';
 import 'dotenv/config';
 import * as fs from 'fs';
 import * as path from 'path';
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({ intents: [GatewayIntentBits.GuildMembers, GatewayIntentBits.Guilds] });
 const TOKEN = process.env.DISCORD_TOKEN!;
 const CLIENT_ID = process.env.DISCORD_CLIENT_ID!;
 
@@ -13,6 +13,24 @@ const CLIENT_ID = process.env.DISCORD_CLIENT_ID!;
   });
 
   //TODO: if new user joins guild, interact by posting a welcome message saying "welcome to the server <username>"
+  client.on('guildMemberAdd', member => {
+    const channel = member.guild.channels.cache.get('1170060748748238848') as TextChannel;
+
+    console.log(member);
+
+    const welcomeEmbed = new EmbedBuilder()
+      .setColor('#b700ff')
+      .setTitle('Welcome to the Interstellar Refugee')
+      .setDescription(`Welcome <@${member.user.id}>`)
+      .setThumbnail('https://i.imgur.com/a9GXe4z.png')
+      
+
+    channel.send({ embeds: [welcomeEmbed] });
+
+    
+    
+
+  });
 
   client.on('interactionCreate', async interaction => {
     if (!interaction.isChatInputCommand()) return;
