@@ -32,6 +32,18 @@ const CLIENT_ID = process.env.DISCORD_CLIENT_ID!;
 
   });
 
+  client.on('guildMemberRemove', member => {
+    const channel = member.guild.channels.cache.get('1170060748748238848') as TextChannel;
+
+    const goodbyeEmbed = new EmbedBuilder()
+    .setColor('#b700ff')
+    .setTitle('Goodbye and farewell')
+    .setDescription(`<@${member.user.id}> has to chosen to rest elsewhere, we hope to see you again in the future.`)
+    .setThumbnail('https://i.imgur.com/a9GXe4z.png')
+
+    channel.send({ embeds: [goodbyeEmbed]});
+  });
+
   client.on('interactionCreate', async interaction => {
     if (!interaction.isChatInputCommand()) return;
 
