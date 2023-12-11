@@ -1,5 +1,6 @@
-import { Client, Collection, GatewayIntentBits, REST, Routes, EmbedBuilder, TextChannel } from 'discord.js';
+import { Client, Collection, GatewayIntentBits, REST, Routes, EmbedBuilder, TextChannel} from 'discord.js';
 import 'dotenv/config';
+import sharp from "sharp";
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -12,17 +13,39 @@ const CLIENT_ID = process.env.DISCORD_CLIENT_ID!;
     console.log(`Logged in as ${client.user!.tag}!`);
   });
 
-  //TODO: if new user joins guild, interact by posting a welcome message saying "welcome to the server <username>"
-  client.on('guildMemberAdd', member => {
-    const channel = member.guild.channels.cache.get('1170060748748238848') as TextChannel;
+  
 
-    console.log(member);
+  //TODO: if new user joins guild, interact by posting a welcome message saying "welcome to the server <username>"
+  client.on('guildMemberAdd', async member => {
+    const channel = member.guild.channels.cache.get('1170060748748238848') as TextChannel;
+    const informationChannel = member.guild.channels.cache.get('1183432952315641937');
+    const userAvatar = member.user.displayAvatarURL({ size: 1024});
+    
+  
 
     const welcomeEmbed = new EmbedBuilder()
-      .setColor('#b700ff')
-      .setTitle('Welcome to the Interstellar Refugee')
+      .setAuthor({
+        name: `${member.user.displayName}`,
+        iconURL: userAvatar,
+      })
+      .setTitle("Welcome to the Interstellar Refugee")
       .setDescription(`Welcome <@${member.user.id}>`)
-      .setThumbnail('https://i.imgur.com/a9GXe4z.png')
+      .addFields(
+        {
+          name: `Before you go ahead and dive into our server, we ask that you read ${informationChannel}.`,
+          value: "We love everyone in our community and we want to be a safe space to everyone that's here.",
+          inline: true
+        },
+        {
+          name: "Roles",
+          value: "You can pick your roles in the 'Channels & Roles' section",
+          inline: false
+        },
+      )
+      .setImage("https://i.imgur.com/mWxfnWG.jpg")
+      .setThumbnail("https://i.imgur.com/a9GXe4z.png")
+      .setColor("#660554")
+      .setTimestamp();
       
 
     channel.send({ embeds: [welcomeEmbed] });
@@ -34,12 +57,19 @@ const CLIENT_ID = process.env.DISCORD_CLIENT_ID!;
 
   client.on('guildMemberRemove', member => {
     const channel = member.guild.channels.cache.get('1170060748748238848') as TextChannel;
+    const userAvatar = member.user.displayAvatarURL({ size: 1024});
 
     const goodbyeEmbed = new EmbedBuilder()
-    .setColor('#b700ff')
-    .setTitle('Goodbye and farewell')
+    .setAuthor({
+      name: `${member.user.displayName}`,
+      iconURL: userAvatar,
+    })
+    .setTitle("Goodbye and Farewell")
     .setDescription(`<@${member.user.id}> has to chosen to rest elsewhere, we hope to see you again in the future.`)
-    .setThumbnail('https://i.imgur.com/a9GXe4z.png')
+    .setImage("https://i.imgur.com/wLAZveg.png")
+    .setThumbnail("https://i.imgur.com/a9GXe4z.png")
+    .setColor("#660554")
+    .setTimestamp();
 
     channel.send({ embeds: [goodbyeEmbed]});
   });
