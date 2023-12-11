@@ -26,22 +26,22 @@ export default {
                 {
                   name: "Influence",
                   value: `Our guild currently has ${gw2Result.data.influence} influence`,
-                  inline: false
+                  inline: true
                 },
                 {
                   name: "Aetherium",
                   value: `Our guild currently has ${gw2Result.data.aetherium} aetherium`,
-                  inline: false
+                  inline: true
                 },
                 {
                   name: "Favor",
                   value: `Our guild currently has ${gw2Result.data.favor} favor`,
-                  inline: false
+                  inline: true
                 },
                 {
                   name: "Current amount of guild members",
                   value: `Our guild currently has ${gw2Result.data.member_count} members`,
-                  inline: false
+                  inline: true
                 },
               )
         await interaction.reply({ embeds: [embed] });
