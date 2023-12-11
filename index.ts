@@ -1,6 +1,5 @@
 import { Client, Collection, GatewayIntentBits, REST, Routes, EmbedBuilder, TextChannel} from 'discord.js';
 import 'dotenv/config';
-import sharp from "sharp";
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -16,7 +15,7 @@ const CLIENT_ID = process.env.DISCORD_CLIENT_ID!;
   
 
   //TODO: if new user joins guild, interact by posting a welcome message saying "welcome to the server <username>"
-  client.on('guildMemberAdd', async member => {
+  client.on('guildMemberAdd', member => {
     const channel = member.guild.channels.cache.get('1170060748748238848') as TextChannel;
     const informationChannel = member.guild.channels.cache.get('1183432952315641937');
     const userAvatar = member.user.displayAvatarURL({ size: 1024});
