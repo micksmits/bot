@@ -24,23 +24,18 @@ export default {
             .setTitle(`${gw2Result.data.name}`)
             .addFields(
                 {
-                  name: "Influence",
-                  value: `Our guild currently has ${gw2Result.data.influence} influence`,
+                  name: "Aetherium <:Aetherium:1184199430388326402>",
+                  value: `Our guild currently has **${gw2Result.data.aetherium}** aetherium`,
                   inline: true
                 },
                 {
-                  name: "Aetherium",
-                  value: `Our guild currently has ${gw2Result.data.aetherium} aetherium`,
+                  name: "Favor <:Favor:1184216596940595240> ",
+                  value: `Our guild currently has **${gw2Result.data.favor}** favor`,
                   inline: true
                 },
                 {
-                  name: "Favor",
-                  value: `Our guild currently has ${gw2Result.data.favor} favor`,
-                  inline: true
-                },
-                {
-                  name: "Current amount of guild members",
-                  value: `Our guild currently has ${gw2Result.data.member_count} members`,
+                  name: "Guild members <:Members:1184218104889348249> ",
+                  value: `Our guild currently has **${gw2Result.data.member_count}** members`,
                   inline: true
                 },
               )
