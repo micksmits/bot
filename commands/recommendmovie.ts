@@ -13,7 +13,7 @@ export default {
         .addChoices(
           ...categories
         )),
-  async execute(interaction: any) {
+  async execute(interaction) {
     const category = interaction.options.getString('category');
 
     const result = await axios.get('https://api.themoviedb.org/3/discover/movie', {
@@ -29,7 +29,7 @@ export default {
       }
     });
 
-    const movies: any[] = [];
+    const movies = [];
 
     for (let i=0; i < 10; i++) {
       const movie = result.data.results[i];
@@ -50,7 +50,3 @@ export default {
     await interaction.reply({ embeds: movies });
   },
 };
-
-
-
-
