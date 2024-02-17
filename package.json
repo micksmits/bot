@@ -4,8 +4,9 @@
   "description": "Discord bot for Interstellar Refuge",
   "main": "main.ts",
   "scripts": {
-    "start:bot": "nodemon ./main.ts localhost 8080",
-    "start:db": "docker-compose up -d"
+    "bot:start": "nodemon ./main.ts localhost 8080",
+    "db:start": "docker-compose up -d",
+    "db:stop": "docker-compose down"
   },
   "license": "MIT",
   "dependencies": {
