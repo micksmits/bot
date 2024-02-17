@@ -13,8 +13,6 @@ export default {
   async execute(client, interaction) {
     const expression = interaction.options.getString('expression');
 
-    interaction
-
     try {
       const result = eval(expression);
       await interaction.reply({ content: `Expression: ${expression}\nResult: ${result}`, ephemeral: false });
