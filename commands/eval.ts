@@ -13,6 +13,7 @@ export default {
   async execute(client, interaction) {
     const expression = interaction.options.getString('expression');
 
+    //TODO: if result contains sensitive info, make it ephemeral
     try {
       const result = eval(expression);
       await interaction.reply({ content: `Expression: ${expression}\nResult: ${result}`, ephemeral: false });
