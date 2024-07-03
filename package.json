@@ -4,7 +4,8 @@
   "description": "Discord bot for Interstellar Refuge",
   "main": "main.ts",
   "scripts": {
-    "dev": "ts-node-dev --respawn src/main.ts"
+    "dev": "ts-node-dev --respawn src/main.ts",
+    "prod": "ts-node src/main.ts"
   },
   "license": "MIT",
   "dependencies": {
