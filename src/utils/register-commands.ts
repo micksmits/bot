@@ -2,6 +2,7 @@ import { REST, Routes } from 'discord.js';
 import * as fs from 'fs';
 import * as path from 'path';
 import { TibClient } from '../main';
+import 'dotenv/config';
 
 const TOKEN = process.env.DISCORD_TOKEN!;
 const CLIENT_ID = process.env.DISCORD_CLIENT_ID!;

@@ -1,5 +1,4 @@
-import { PrismaClient } from '@prisma/client';
-import { Client, Collection, EmbedBuilder, GatewayIntentBits, TextChannel } from 'discord.js';
+import { Client, Collection, GatewayIntentBits } from 'discord.js';
 import { registerCommands } from './utils/register-commands';
 import 'dotenv/config';
 
@@ -18,7 +17,6 @@ export class TibClient extends Client {
 
 const client = new TibClient();
 const TOKEN = process.env.DISCORD_TOKEN!;
-const prisma = new PrismaClient();
 
 async function main() {
 
@@ -31,32 +29,17 @@ async function main() {
   client.on('interactionCreate', async interaction => {
     if (!interaction.isChatInputCommand()) return;
 
+    const member = await interaction.guild.members.fetch(interaction.user);
+
+    if (!member.roles.cache.some(role => role.name === 'test role')) return;
+
     const command = client.commands.get(interaction.commandName);
     if (!command) return;
 
     await command.execute(client, interaction);
   });
 
-  client.on('guildMemberAdd', async member => {
-    const channel = member.guild.channels.cache.get('1170060748748238848');
-    const welcomeEmbed = new EmbedBuilder()
-      .setColor('#b700ff')
-      .setTitle('Welcome to the Interstellar Refugee')
-      .setDescription(`Welcome <@${member.user.id}>`)
-      .setThumbnail('https://i.imgur.com/a9GXe4z.png');
-
-    channel.isTextBased && (channel as TextChannel).send({ embeds: [welcomeEmbed] });
-  });
-
   await client.login(TOKEN);
 }
 
-main()
-  .then(async () => {
-    await prisma.$disconnect();
-  })
-  .catch(async (error) => {
-    console.error(error);
-    await prisma.$disconnect();
-    process.exit(1);
-  });
+main();

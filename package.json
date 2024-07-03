@@ -4,13 +4,10 @@
   "description": "Discord bot for Interstellar Refuge",
   "main": "main.ts",
   "scripts": {
-    "bot:start": "nodemon ./main.ts localhost 8080",
-    "db:start": "docker-compose up -d",
-    "db:stop": "docker-compose down"
+    "dev": "ts-node-dev --respawn src/main.ts"
   },
   "license": "MIT",
   "dependencies": {
-    "@prisma/client": "^5.9.1",
     "axios": "^1.5.1",
     "discord.js": "^14.13.0",
     "dotenv": "^16.3.1"
@@ -24,9 +21,8 @@
     "eslint-plugin-import": "^2.29.0",
     "eslint-plugin-n": "^16.3.1",
     "eslint-plugin-promise": "^6.1.1",
-    "nodemon": "^3.0.2",
-    "prisma": "^5.9.1",
     "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.3.3"
   }
 }
