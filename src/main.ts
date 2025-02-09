@@ -1,4 +1,4 @@
-import { Client, Collection, GatewayIntentBits } from 'discord.js';
+import { Client, Collection, Events, GatewayIntentBits } from 'discord.js';
 import { registerCommands } from './utils/register-commands';
 import 'dotenv/config';
 
@@ -20,18 +20,18 @@ const TOKEN = process.env.DISCORD_TOKEN!;
 
 async function main() {
 
-  client.on('ready', async () => {
+  client.on(Events.ClientReady, async () => {
     console.log(`Logged in as ${client.user.tag}!`);
     const guilds = client.guilds.cache;
     guilds.forEach(async (guild) => registerCommands(client, guild.id));
   });
 
-  client.on('interactionCreate', async interaction => {
+  client.on(Events.InteractionCreate, async interaction => {
     if (!interaction.isChatInputCommand()) return;
 
     const member = await interaction.guild.members.fetch(interaction.user);
 
-    if (!member.roles.cache.some(role => role.name === 'test role')) return;
+    if (!member.roles.cache.some(role => role.name === 'can use bot')) return;
 
     const command = client.commands.get(interaction.commandName);
     if (!command) return;
